@@ -259,7 +259,7 @@
     HeadBarHtml += "				<div class=\"container\">\n";
     HeadBarHtml += "					<div class=\"row\">\n";
     HeadBarHtml += "						<div class=\"col-xs-2\">\n";
-    HeadBarHtml += "							<div id=\"fh5co-logo\"><a href=\"index.html\">Air<span>.<\/span><\/a><\/div>\n";
+    HeadBarHtml += "							<div id=\"fh5co-logo\"><a href=\"index.html\">Dao-Gov<span>.<\/span><\/a><\/div>\n";
     HeadBarHtml += "						<\/div>\n";
     HeadBarHtml += "						<div class=\"col-xs-10 text-right menu-1\">\n";
     HeadBarHtml += "							<ul>\n";
@@ -284,7 +284,7 @@
     HeadBarHtml += "\n";
     HeadBarHtml += "				<\/div>\n";
     HeadBarHtml += "			<\/div>\n";
-    HeadBarHtml += "<div class='ui modal' style='width:50%;height:auto;max-height:50%;overflow-y:auto;' id='Sign_Modal'><div class='header'>Sign In and Sign Up</div>";
+    HeadBarHtml += "<div class='ui modal' style='top:10%;width:50%;height:auto;max-height:70%;overflow-y:auto;' id='Sign_Modal'><div class='header'>Sign In and Sign Up</div>";
     HeadBarHtml += "<div class='content'><div class='ui form'><label>Click It To Upload Your Private Key File.</label>"
     HeadBarHtml += "<button id='PrivateKeyFile' class='ui fluid basic green button'>Upload Your Private Key</button><input type='file' class='hack-element' onchange='UploadPrivateKey();' id='PrivateKeyFileInput' />";
     HeadBarHtml += "<div class='ui divider'></div>";
@@ -316,9 +316,15 @@
     $("#SubmitPrivateKey").click(function(event) {
       let PrivateKey = $('#PrivateTextArea').val()
       try {
-        EOS_Unlock(PrivateKey)
+        let res = EOS_Unlock(PrivateKey);
+        if (res != false) {
+          $("#Sign_Modal").modal("hide");
+        } else {
+          $("#SignIn").attr("disabled", true);
+          $("#SignIn").text(res);
+        }
       } catch (e) {
-
+        console.log(e);
       }
     });
   }
@@ -337,14 +343,12 @@
     loaderPage();
     counterWayPoint();
     fullHeight();
-    //Private File Upload
-
   });
 
 
 }());
 
-
+//Private File Upload
 function UploadPrivateKey() {
   if (document.getElementById("PrivateKeyFileInput").length == 0) return;
   var fileObj = document.getElementById("PrivateKeyFileInput").files[0]; // js 获取文件对象
@@ -355,9 +359,17 @@ function UploadPrivateKey() {
     var fileString = evt.target.result; // 读取文件内容
     //发送Private Key
     try {
-      EOS_Unlock(fileString)
-    } catch (e) {
+      $("#PrivateTextArea").val(fileString);
 
+      let res = EOS_Unlock(PrivateKey);
+      if (res != false) {
+        $("#Sign_Modal").modal("hide");
+      } else {
+        $("#SignIn").attr("disabled", true);
+        $("#SignIn").text(res);
+      }
+    } catch (e) {
+      console.log(e);
     }
   }
 }
