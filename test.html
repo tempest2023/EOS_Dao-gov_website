@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <!-- <meta http-equiv="Access-Control-Allow-Origin" content="*"> -->
+  <title>EOSAPI_TEST</title>
+  <script src="js/eos.js"></script>
+  <script src="js/jquery.min.js"></script>
+</head>
+
+<body>
+  <div id="main">
+    <span>
+            information
+        </span>
+  </div>
+  <script>
+    keyProvider = [
+      '5KXDWBsr3fjMMKxLSa8EJABUGKCuT6bN6cccqMq6xW8NrbRavpx'
+    ]
+    // pubkey = 'EOS8ZxuqVNsxdYwv8vjC6yWAXmJZBSKzzkvN7xijstJLbcKN16gLc'
+    console.log(window)
+    var {
+      format,
+      api,
+      ecc,
+      json,
+      Fcbuffer
+    } = Eos.modules;
+
+    eos = Eos({
+      keyProvider
+    });
+    console.dir(ecc.privateToPublic('5KXDWBsr3fjMMKxLSa8EJABUGKCuT6bN6cccqMq6xW8NrbRavpx'));
+    // api.processArgs({}, ['bob','alice','1 GNX',""], 'eosio.token', res=>{console.dir(res)})
+    // api.processArgs(['eosio.token','alice'], ['code','account'], 'get_currency_balance' ).then(res=>{console.dir(res)}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       );
+    // eos.getCurrencyBalance("eosio.token","bob").then(res=>{console.dir(res);}).catch(err=>{console.log(err);});
+    // eos.getTableRows(true,"eosio.token","bob","accounts","2",0,-1,100).then(res=>{console.dir(res);}).catch(err=>{console.log(err);});;
+    // eos.getBlock(1111).then(result => { console.dir(result); $("span").text(JSON.stringify(result)); })
+    // eos.getBlock({ block_num_or_id: 1 }).then(result => console.log(result))
+    // eos.transfer({ from: 'bob', to: 'alice', quantity: '1.000 GNX', memo: '' }, options)
+    // eos.transfer('bob', 'alice', '1 AAA', '');
+    // eos.getCurrencyBalance("dao","SYS").then(res=>{console.dir(res);}).catch(err=>{console.log(err);});
+    eos.getTableRows(true, "dao", "dao", "proposals", "2", 0, -1, 100).then(res => {
+      console.dir(res);
+    }).catch(err => {
+      console.log(err);
+    });;
+    // eos.transaction('dao', dao => {
+    //     dao.createpropf("dao", "100.0000 SYS" ,"This is my proposal",{broadcast:true}).then(res=>{console.dir(res);}).catch(err=>{console.log(err);});
+    // })
+    eos.contract('dao').then(dao => {
+      dao.createpropf("dao", "100.0000 SYS", "This is my proposal", {
+        broadcast: true,
+        authorization: "dao"
+      }).then(res => {
+        console.dir(res);
+      }).catch(err => {
+        console.log(err);
+      });
+    });
+  </script>
+</body>
+
+</html>
+
+<!-- EOS5uKfFKQwYXmrJEWiXTcH3d22P8xLD3fjVMJdpGgZKhF1qtt7D8 -->
+<!-- testAccount:
+Endpoint : https://test1.eosdocs.io:443
+
+Account : alice
+
+owner Public Key : EOS5zYU1oag8Fzfdi78zL5DjgEAykmNpvsjfJJ9xQjagav1Yxdwk8
+owner Private Key : 5KAm2CF3z7WhRUTFSeacGzP5wMsypY2jkbHt3wZcASpTjzPGuGe
+
+active Public Key : EOS6Epv919tNQ2Ac22eEuL2noXQe6xcHXmvJiBZXZ6oDZke71z8HF
+active Private Key : 5KRPiB8AX5HrYBYzdNMBsra9YhVBQNFLMSt7Cq2DcPvjpHUVTCN(use this key to upload contracts) -->
+<!--
+Account : tom
+
+owner Public Key : EOS7zdw6H4xCG28xwvT7ioqxysHDeQvPBMPSFx6YHWns3XQeZNrtV
+owner Private Key : 5KPhwqq4Tjz3UdEo4UhKfebuBoS4HWTAcDpVuekZG7oyhJ9aMMX
+
+active Public Key : EOS7NvouNzyZiMGzz8ivhYJtZgCweMcPXQxBSVgyAH27kBcLjvNoq
+active Private Key : 5KPqk9ov2pY4figJYhLm7PRTRxJookHG7RZ6eAmc4cJsrHiBrJk(use this key to upload contracts) -->

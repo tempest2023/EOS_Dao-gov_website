@@ -1,0 +1,185 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Dao-gov</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Free HTML5 Website Template by freehtml5.co" />
+  <meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
+  <meta name="author" content="freehtml5.co" />
+
+
+
+  <!-- Facebook and Twitter integration -->
+  <meta property="og:title" content="" />
+  <meta property="og:image" content="" />
+  <meta property="og:url" content="" />
+  <meta property="og:site_name" content="" />
+  <meta property="og:description" content="" />
+  <meta name="twitter:title" content="" />
+  <meta name="twitter:image" content="" />
+  <meta name="twitter:url" content="" />
+  <meta name="twitter:card" content="" />
+
+  <!-- <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,700,800" rel="stylesheet">	 -->
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
+
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="css/animate.css">
+  <!-- Icomoon Icon Fonts-->
+  <link rel="stylesheet" href="css/icomoon.css">
+  <!-- Bootstrap  -->
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <!-- Flexslider  -->
+  <link rel="stylesheet" href="css/flexslider.css">
+  <!-- Semantic -->
+  <link rel="stylesheet" type="text/css" href="Semantic/semantic.css">
+  <!-- Theme style  -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Modernizr JS -->
+  <script src="js/modernizr-2.6.2.min.js"></script>
+  <!-- FOR IE9 below -->
+  <!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+
+<body>
+
+  <div class="fh5co-loader"></div>
+
+  <div id="page">
+    <nav class="fh5co-nav" role="navigation" id="headbar"></nav>
+
+    <div id="fh5co-proposal-create" class="fh5co-proposal-create">
+      <div class="container">
+        <div class="row animate-box">
+          <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+            <h2>Proposals</h2>
+            <p><a href="#create">Create</a> a proposal for your organization.And shares voting decides whether the proposal passes.</p>
+          </div>
+        </div>
+        <div class="ui top attached tabular menu" id="CreatePro">
+          <a class="item active" data-tab="first">Type Ⅰ</a>
+          <a class="item" data-tab="second">Type Ⅱ</a>
+          <a class="item" data-tab="third">Type Ⅲ</a>
+        </div>
+        <div class="ui bottom attached tab segment active" data-tab="first">
+          <div class="content">
+            <h1><div class="ui yellow horizontal label" style='float:right;'>Funds Distributing</div></h1>
+            <h1 style='text-align: center;'>Proposal Ⅰ</h1>
+            <h3>This type of proposal is used to allocate funds.</h3>
+            <form class="ui form">
+              <div class="field">
+                <label>Proposal Info.</label>
+                <textarea type="text" name="ProposalInfo" id="FundsProInfo" placeholder=" What is this funds used for?"></textarea>
+              </div>
+              <div class="field">
+                <label>Beneficiary</label>
+                <input type="text" name="Beneficiary" id="FundsBene" placeholder="The account which can get funds when proposal passes.">
+              </div>
+              <div class="field">
+                <label>Funds</label>
+                <input type="text" name="Funds" id="Funds" placeholder="How much funds he can get when proposal passes?">
+              </div>
+              <div class="field">
+                <label>DeadLine</label>
+                <input type="text" name="deadline" id="FundsDeadline" placeholder="When the proposal is due?">
+              </div>
+              <button id="FundsProIssue" class="ui fluid inverted yellow button" type="button">Issue</button>
+            </form>
+          </div>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="second">
+          <div class="content">
+            <h1><div class="ui teal horizontal label" style='float:right;'>Information Change</div></h1>
+            <h1 style='text-align: center;'>Proposal Ⅱ</h1>
+            <h3>This type of proposal is used to change the information of organization(name, description and so on).</h3>
+            <form class="ui form">
+              <div class="field">
+                <label>Proposal Info.</label>
+                <textarea type="text" name="InfoProInfo" id="InfoProInfo" placeholder="What does this proposal want to change?"></textarea>
+              </div>
+              <div class="field">
+                <label>Proposer</label>
+                <input type="text" name="Proposer" id="InfoProposer" placeholder="The account which issues proposal.">
+              </div>
+              <div class="field">
+                <label>Changed Info</label>
+                <input type="text" name="InfoName" id="InfoName" placeholder="What is the changed information?">
+              </div>
+              <div class="field">
+                <label>DeadLine</label>
+                <input type="text" name="deadline" id="InfoDeadline" placeholder="When the proposal is due?">
+              </div>
+              <button id="InfoProIssue" class="ui fluid inverted blue button" type="button">Issue</button>
+            </form>
+          </div>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="third">
+          <div class="content">
+            <h1><div class="ui red horizontal label" style='float:right;'>Major Decisions</div></h1>
+            <h1 style='text-align: center;'>Proposal Type Ⅲ.</h1>
+            <h3>This type of proposal is used to issue some important decisions without funds allocation.</h3>
+            <form class="ui form">
+              <div class="field">
+                <label>Proposal Info.</label>
+                <textarea type="text" name="MajProInfo" id="MajProInfo" placeholder="What does this proposal decide?"></textarea>
+              </div>
+              <div class="field">
+                <label>Proposer</label>
+                <input type="text" name="Proposer" id="MajProposer" placeholder="The account which issues proposal.">
+              </div>
+              <div class="field">
+                <label>DeadLine</label>
+                <input type="text" name="deadline" id="MajDeadline" placeholder="When the proposal is due?">
+              </div>
+              <button id="MajProIssue" class="ui fluid inverted red button" type="button">Issue</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="fh5co-started">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+            <h2>Your Proposals</h2>
+            <p>There are some proposals you can vote.They are not due.</p>
+            <p><a href="#" class="btn btn-default btn-lg">Contact Us</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fh5co-footer" role="contentinfo"></div>
+  </div>
+
+  <div class="gototop js-top">
+    <a href="#" class="js-gotop"><i class="angle double up icon"></i></a>
+  </div>
+
+  <!-- jQuery -->
+  <script src="js/jquery.min.js"></script>
+  <!-- jQuery Easing -->
+  <script src="js/jquery.easing.1.3.js"></script>
+  <!-- Bootstrap -->
+  <script src="js/bootstrap.min.js"></script>
+  <!-- Waypoints -->
+  <script src="js/jquery.waypoints.min.js"></script>
+  <!-- Flexslider -->
+  <script src="js/jquery.flexslider-min.js"></script>
+  <!-- Semantic -->
+  <script src="Semantic/semantic.min.js"></script>
+  <!-- Main -->
+  <script src="js/main.js"></script>
+  <script src="js/proposals.js"></script>
+
+</body>
+
+</html>

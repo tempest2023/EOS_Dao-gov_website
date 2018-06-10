@@ -180,7 +180,6 @@
 
 
   var goToTop = function() {
-
     $('.js-gotop').on('click', function(event) {
 
       event.preventDefault();
@@ -191,11 +190,11 @@
 
       return false;
     });
-
     $(window).scroll(function() {
 
       var $win = $(window);
       if ($win.scrollTop() > 200) {
+        console.log("top!")
         $('.js-top').addClass('active');
       } else {
         $('.js-top').removeClass('active');
@@ -259,24 +258,23 @@
     HeadBarHtml += "				<div class=\"container\">\n";
     HeadBarHtml += "					<div class=\"row\">\n";
     HeadBarHtml += "						<div class=\"col-xs-2\">\n";
-    HeadBarHtml += "							<div id=\"fh5co-logo\"><a href=\"index.html\">Dao-Gov<span>.<\/span><\/a><\/div>\n";
+    HeadBarHtml += "							<div id=\"fh5co-logo\"><img class='logo-eos' src=\"images/eosio-logo-white@2x-201x300.png\" sizes=\"(max-width: 201px) 100vw, 201px\" data-was-processed=\"true\" title=\"eosio-logo-white@2x\"><a href=\"index.html\">Dao-Gov<span>.<\/span><\/a><\/div>\n";
     HeadBarHtml += "						<\/div>\n";
     HeadBarHtml += "						<div class=\"col-xs-10 text-right menu-1\">\n";
     HeadBarHtml += "							<ul>\n";
     HeadBarHtml += "								<li><a href=\"index.html\">Index<\/a><\/li>\n";
     HeadBarHtml += "								<li><a href=\"org.html\">Org<\/a><\/li>\n";
     HeadBarHtml += "								<li class=\"has-dropdown\">\n";
-    HeadBarHtml += "									<a href=\"#\">Proposals<\/a>\n";
+    HeadBarHtml += "									<a href=\"proposals.html\">Proposals<\/a>\n";
     HeadBarHtml += "									<ul class=\"dropdown\">\n";
-    HeadBarHtml += "										<li><a href=\"#\">Create new Proposal<\/a><\/li>\n";
-    HeadBarHtml += "										<li><a href=\"#\">Look your Proposals<\/a><\/li>\n";
-    HeadBarHtml += "										<li><a href=\"#\">Due Proposals<\/a><\/li>\n";
-    HeadBarHtml += "										<li><a href=\"#\">Rejected Proposals<\/a><\/li>\n";
+    HeadBarHtml += "										<li><a href=\"proposals.html#create\">Create new Proposal<\/a><\/li>\n";
+    HeadBarHtml += "										<li><a href=\"proposals.html#look\">Look your Proposal<\/a><\/li>\n";
+    HeadBarHtml += "										<li><a href=\"proposals.html#due\">Due Proposal<\/a><\/li>\n";
+    HeadBarHtml += "										<li><a href=\"proposals.html#rejected\">Rejected Proposal<\/a><\/li>\n";
     HeadBarHtml += "									<\/ul>\n";
     HeadBarHtml += "								<\/li>\n";
     HeadBarHtml += "								<li><a href=\"profits.html\">Profits<\/a><\/li>\n";
-    HeadBarHtml += "								<li><a href=\"profile.html\">Profile<\/a><\/li>\n";
-    HeadBarHtml += "								<li><button class=\"ui inverted red button\" href=\"#\" id=\"SignIn\">Sign In<\/button>";
+    HeadBarHtml += "								<li><button class=\"ui inverted blue button\" href=\"#\" id=\"SignIn\">Sign In<\/button>";
     HeadBarHtml += "                <\/li>\n";
     HeadBarHtml += "							<\/ul>\n";
     HeadBarHtml += "						<\/div>\n";
@@ -285,10 +283,11 @@
     HeadBarHtml += "				<\/div>\n";
     HeadBarHtml += "			<\/div>\n";
     HeadBarHtml += "<div class='ui modal' style='top:10%;width:50%;height:auto;max-height:70%;overflow-y:auto;' id='Sign_Modal'><div class='header'>Sign In and Sign Up</div>";
-    HeadBarHtml += "<div class='content'><div class='ui form'><label>Click It To Upload Your Private Key File.</label>"
-    HeadBarHtml += "<button id='PrivateKeyFile' class='ui fluid basic green button'>Upload Your Private Key</button><input type='file' class='hack-element' onchange='UploadPrivateKey();' id='PrivateKeyFileInput' />";
+    HeadBarHtml += "<div class='content'><div class='ui form'><h2>Sign In</h2><label>Click It To Upload Your Private Key File.</label>"
+    HeadBarHtml += "<button id='PrivateKeyFile' class='ui fluid inverted green button'>Upload Your Private Key</button><input type='file' class='hack-element' onchange='UploadPrivateKey();' id='PrivateKeyFileInput' />";
     HeadBarHtml += "<div class='ui divider'></div>";
-    HeadBarHtml += "<label>Or Input Your Private Key:</label><textarea id='PrivateTextArea'></textarea><div class='field'><button class='ui basic green button' id='SubmitPrivateKey'>Unlock</button></div>";
+    HeadBarHtml += "<label>Or Input Your Private Key:</label><textarea style='height:3em;min-height:1.5em;' id='PrivateTextArea'></textarea><div class='field'><button class='ui inverted blue button' id='SubmitPrivateKey'>Unlock</button></div>";
+    HeadBarHtml += "<div class='ui divider'></div><h2>Sign Up</h2><br/><label>Your Account:</label><input class='input' id='Signup_account' /><div class='field'><button class='ui inverted orange button'>Sign Up For This Account </button></div>";
     HeadBarHtml += "</div></div></div>"
     $("#headbar").empty();
     $("#headbar").append(HeadBarHtml);
@@ -314,9 +313,19 @@
       $("#PrivateKeyFileInput").trigger('click');
     });
     $("#SubmitPrivateKey").click(function(event) {
-      let PrivateKey = $('#PrivateTextArea').val()
+      var PrivateKey = [$('#PrivateTextArea').val()];
       try {
-        let res = EOS_Unlock(PrivateKey);
+        eos = Eos({
+          PrivateKey
+        });
+        var {
+          format,
+          api,
+          ecc,
+          json,
+          Fcbuffer
+        } = Eos.modules;
+        res = ecc.isValidPrivate(PrivateKey);
         if (res != false) {
           $("#Sign_Modal").modal("hide");
         } else {
@@ -325,15 +334,49 @@
         }
       } catch (e) {
         console.log(e);
+        $("#SubmitPrivateKey").before("<div class='ui field' style='color:red;font-size:1.5em;'>Backend does not exist.</div>")
       }
     });
+  }
+  var FooterHtml = function() {
+    var FooterHtmlStr = "";
+    FooterHtmlStr += "      <div class=\"container\">\n";
+    FooterHtmlStr += "        <div class=\"row row-pb-md\">\n";
+    FooterHtmlStr += "          <div class=\"col-md-4 fh5co-widget\">\n";
+    FooterHtmlStr += "            <h4>Dao-Gov<\/h4>\n";
+    FooterHtmlStr += "            <p>Open and fair allocation of shares.Distributed voting for proposals.Convenient and quick funds management.<\/p>\n";
+    FooterHtmlStr += "          <\/div>\n";
+    FooterHtmlStr += "          <div class=\"col-md-2 col-md-push-1 fh5co-widget\">\n";
+    FooterHtmlStr += "            <h4>Links<\/h4>\n";
+    FooterHtmlStr += "            <ul class=\"fh5co-footer-links\">\n";
+    FooterHtmlStr += "              <li><a href=\"index.html\">Index<\/a><\/li>\n";
+    FooterHtmlStr += "              <li><a href=\"org.html\">Org<\/a><\/li>\n";
+    FooterHtmlStr += "              <li><a href=\"Proposals\">Proposals<\/a><\/li>\n";
+    FooterHtmlStr += "              <li><a href=\"Profits\">Profits<\/a><\/li>\n";
+    FooterHtmlStr += "            <\/ul>\n";
+    FooterHtmlStr += "          <\/div>\n";
+    FooterHtmlStr += "          <div class=\"col-md-2 col-md-push-1 fh5co-widget\">\n";
+    FooterHtmlStr += "            <h4>Powered by<\/h4>\n";
+    FooterHtmlStr += "            <ul class=\"fh5co-footer-links\">\n";
+    FooterHtmlStr += "              <li><a href=\"#\">EosIO<\/a><\/li>\n";
+    FooterHtmlStr += "              <li><a href=\"#\">EosJS<\/a><\/li>\n";
+    FooterHtmlStr += "              <li><a href=\"#\">Bootstrap<\/a><\/li>\n";
+    FooterHtmlStr += "              <li><a href=\"#\">Semantic<\/a><\/li>\n";
+    FooterHtmlStr += "            <\/ul>\n";
+    FooterHtmlStr += "          <\/div>\n";
+    FooterHtmlStr += "        <\/div>\n";
+    FooterHtmlStr += "      <\/div>\n";
+    $("#fh5co-footer").empty();
+    // console.log(FooterHtmlStr)
+    $("#fh5co-footer").append(FooterHtmlStr);
   }
 
   $(function() {
     HeadBar();
-    mobileMenuOutsideClick();
     ActiveHeadBar();
     SignIn();
+    FooterHtml();
+    mobileMenuOutsideClick();
     offcanvasMenu();
     burgerMenu();
     contentWayPoint();
@@ -343,6 +386,7 @@
     loaderPage();
     counterWayPoint();
     fullHeight();
+
   });
 
 
@@ -358,18 +402,28 @@ function UploadPrivateKey() {
   reader.onload = function(evt) { //读取完文件之后会回来这里
     var fileString = evt.target.result; // 读取文件内容
     //发送Private Key
-    try {
-      $("#PrivateTextArea").val(fileString);
-
-      let res = EOS_Unlock(PrivateKey);
-      if (res != false) {
-        $("#Sign_Modal").modal("hide");
-      } else {
-        $("#SignIn").attr("disabled", true);
-        $("#SignIn").text(res);
-      }
-    } catch (e) {
-      console.log(e);
-    }
+    $("#PrivateTextArea").val(fileString);
+    // try {
+    //
+    //   eos = Eos({
+    //     [fileString]
+    //   });
+    //   if (res != false) {
+    //     $("#Sign_Modal").modal("hide");
+    //   } else {
+    //     $("#SignIn").attr("disabled", true);
+    //     $("#SignIn").text(res);
+    //   }
+    // } catch (e) {
+    //   console.log(e);
+    // }
   }
 }
+
+function scrollDown() {
+  console.log($('html,body').scrollTop(20))
+  $('html,body').animate({
+    'scrollTop': '300px'
+  });
+}
+var eos = null;
