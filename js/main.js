@@ -275,6 +275,7 @@
     HeadBarHtml += "								<\/li>\n";
     HeadBarHtml += "								<li><a href=\"profits.html\">Profits<\/a><\/li>\n";
     HeadBarHtml += "								<li><button class=\"ui inverted blue button\" href=\"#\" id=\"SignIn\">Sign In<\/button>";
+    HeadBarHtml += "								<li><a id=\"PublicKeyShow\" href=\"#\"><\/a><\/li>\n";
     HeadBarHtml += "                <\/li>\n";
     HeadBarHtml += "							<\/ul>\n";
     HeadBarHtml += "						<\/div>\n";
@@ -325,12 +326,17 @@
           json,
           Fcbuffer
         } = Eos.modules;
-        let res = ecc.isValidPrivate(PrivateKey);
+        let res = ecc.isValidPrivate(PrivateKey[0]);
+
         if (res != false) {
           $("#Sign_Modal").modal("hide");
         } else {
+          let PublicKey = ecc.privateToPublic(PrivateKey[0]);
+          let lenKey = PublicKey.length;
+          let ShortKey = PublicKey.substr(0, 4) + "..." + PublicKey.substr(lenKey - 4, lenKey);
+          $("#SignIn").text(ShortKey);
+          $("#SignIn").val(ShortKey);
           $("#SignIn").attr("disabled", true);
-          $("#SignIn").text(res);
         }
       } catch (e) {
         console.log(e);
