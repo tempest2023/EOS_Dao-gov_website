@@ -264,14 +264,14 @@
     HeadBarHtml += "							<ul>\n";
     HeadBarHtml += "								<li><a href=\"index.html\">Index<\/a><\/li>\n";
     HeadBarHtml += "								<li><a href=\"org.html\">Org<\/a><\/li>\n";
-    HeadBarHtml += "								<li class=\"has-dropdown\">\n";
+    HeadBarHtml += "								<li>\n";
     HeadBarHtml += "									<a href=\"proposals.html\">Proposals<\/a>\n";
-    HeadBarHtml += "									<ul class=\"dropdown\">\n";
-    HeadBarHtml += "										<li><a href=\"proposals.html#create\">Create new Proposal<\/a><\/li>\n";
-    HeadBarHtml += "										<li><a href=\"proposals.html#look\">Look your Proposal<\/a><\/li>\n";
-    HeadBarHtml += "										<li><a href=\"proposals.html#due\">Due Proposal<\/a><\/li>\n";
-    HeadBarHtml += "										<li><a href=\"proposals.html#rejected\">Rejected Proposal<\/a><\/li>\n";
-    HeadBarHtml += "									<\/ul>\n";
+    // HeadBarHtml += "									<ul class=\"dropdown\">\n";
+    // HeadBarHtml += "										<li><a href=\"proposals.html#create\">Create new Proposal<\/a><\/li>\n";
+    // HeadBarHtml += "										<li><a href=\"proposals.html#look\">Look your Proposal<\/a><\/li>\n";
+    // HeadBarHtml += "										<li><a href=\"proposals.html#due\">Due Proposal<\/a><\/li>\n";
+    // HeadBarHtml += "										<li><a href=\"proposals.html#rejected\">Rejected Proposal<\/a><\/li>\n";
+    // HeadBarHtml += "									<\/ul>\n";
     HeadBarHtml += "								<\/li>\n";
     HeadBarHtml += "								<li><a href=\"profits.html\">Profits<\/a><\/li>\n";
     HeadBarHtml += "								<li><button class=\"ui inverted blue button\" href=\"#\" id=\"SignIn\">Sign In<\/button>";
@@ -325,7 +325,7 @@
           json,
           Fcbuffer
         } = Eos.modules;
-        res = ecc.isValidPrivate(PrivateKey);
+        let res = ecc.isValidPrivate(PrivateKey);
         if (res != false) {
           $("#Sign_Modal").modal("hide");
         } else {
